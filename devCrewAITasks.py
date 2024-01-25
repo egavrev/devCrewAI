@@ -1,6 +1,7 @@
 from crewai import Task
 from langchain_community.llms import OpenAI
   
+
 class devCrewTasks():
   ### For the Product Owner
     def create_Product_Owner_requirements(self, agent, idea, details):
