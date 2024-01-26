@@ -19,6 +19,14 @@ class devCrewRun:
         agents = devCrewAIAgents()
         tasks = devCrewTasks()
 
+        #tasks : 
+        #1. make an flow with definet format of output from all steps:
+        #from 1st Requirements and user stories
+        #from 2nd Tech description, ERD DB config and user stores for back and frontend, ux description
+        #from 3rd generate files of code with specific fies
+        #save files and run code to see result.
+        
+
         # Definitions of agents
         POAgent = agents.ProductManager(var1)
         BAAgent = agents.BusinessAnalyst(var1)
