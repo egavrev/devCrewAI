@@ -25,10 +25,6 @@ class devCrewRun:
         # Define your custom agents and tasks in agents.py and tasks.py
         agents = devCrewAIAgents()
         tasks = devCrewTasks()
-
-
-        
-
         # Definitions of agents
         POAgent = agents.ProductManager(var1)
         BAAgent = agents.BusinessAnalyst(var1)
@@ -49,51 +45,79 @@ class devCrewRun:
             var1,
             var2,
         )
-        
+        #define agents fro first step to build requirements and backlog.
+        agents_list_1 = [POAgent, BAAgent]
+        tasks_list_1 = [POTask, BATask]
+
+        # Define your custom crew here, encapsulating all roles and tasks
+        crew_1 = Crew(
+            agents=agents_list_1,
+            tasks=tasks_list_1,
+            verbose=True,
+        )
+
+        result_1 = crew_1.kickoff()
+
+
         UIUXTAsk = tasks.create_UIUX_Design_specs(
             UIUXAgent,
             var1,
-            var2,
+            result_1,
         )
 
-        DBATask = tasks.create_DBA_DB_structure(
-            DBAAgent,
-            var1,
-            var2,
-        )
 
         TATask = tasks.create_Technical_Architect_blueprint(
             TAAgent,
             var1,
-            var2,
+            result_1,
         )
 
-        DevTask = tasks.create_Developer_implementation_plan(
-            DevAgent,
-            var1,
-            var2,
-        )
-
-        # Aggregating all agents and their tasks
-        agents_list = [POAgent, BAAgent, UIUXAgent, DBAAgent, TAAgent, DevAgent]
-        tasks_list = [POTask, BATask, UIUXTAsk, DBATask, TATask, DevTask]
+        agents_list_2 = [UIUXAgent, TAAgent]
+        tasks_list_2 = [UIUXTAsk,  TATask]
 
         # Define your custom crew here, encapsulating all roles and tasks
-        crew = Crew(
-            agents=agents_list,
-            tasks=tasks_list,
+        crew_2 = Crew(
+            agents=agents_list_2,
+            tasks=tasks_list_2,
             verbose=True,
         )
 
-        result = crew.kickoff()
-        return result
+        result_2 = crew_2.kickoff()
+
+        DevTask = tasks.create_Developer_implementation_plan(
+            DevAgent,
+            result_1,
+            result_2,
+        )
+
+        DBATask = tasks.create_DBA_DB_structure(
+            DBAAgent,
+            result_1,
+            result_2,
+        )
+        # Aggregating all agents and their tasks
+        agents_list_3 = [ DBAAgent,DevAgent]
+        tasks_list_3 = [DBATask,DevTask]
+
+        # Define your custom crew here, encapsulating all roles and tasks
+        crew_3 = Crew(
+            agents=agents_list_3,
+            tasks=tasks_list_3,
+            verbose=True,
+        )
+
+        result_3 = crew_3.kickoff()
+        return result_3
 
 
 # This is the main function that you will use to run your custom crew.
 if __name__ == "__main__":
     
-    var1= "create an tool for story telling"
-    var2="it shoudld wirte sotry for kids"
+    var1= "Сreate an simple story telling app for kids"
+    var2="""it should have just on screen, where you select an topic - whther is about honesty, bravery etc, 
+    as well as setup where it is happening - in robo-city in jungle, 
+    tool will generate title image and text for kids each time it should try to generate new story
+    as AI model you can use OpenAI API"""
     dev_crew = devCrewRun(var1, var2)
     result = dev_crew.run()
     print("\n\n########################")
