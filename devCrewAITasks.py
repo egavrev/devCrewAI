@@ -4,31 +4,44 @@ from langchain_community.llms import OpenAI
 
 class devCrewTasks():
   ### For the Product Owner
-    def create_Product_Owner_requirements(self, agent, idea, details):
-        return Task(description=f"You need to create clear requirements for {idea} with the following details: {details}", agent=agent)
-    ### For the Business Analysts
-    def create_BA_user_stories(self, agent, idea, details):
-        return Task(description=f"Your goal is to translate {idea} into detailed, actionable user stories and acceptance criteria, considering the following details: {details}", agent=agent)
-    ### For the Technical Architect
-    def create_Technical_Architect_blueprint(self, agent, idea, details):
-        return Task(description=f"Digest {idea}, and architect a coherent and scalable technical framework usi Streamlit for front-end and Python on backend, API and DB to be sql-ligt, considering the following details: {details}. Apply architectural patterns and technology stacks as appropriate.", agent=agent)
-    ### For the UI/UX Designer
-    def create_UIUX_Design_specs(self, agent, idea, details):
-        return Task(description=f"Assess {idea}, exploring its potential UX and UI elements, and define clear design requirements in text form using the following details: {details}", agent=agent)
-    ### For the Database Administrator (DBA)
-    def create_DBA_DB_structure(self, agent, idea, details):
-        return Task(description=f"Evaluate {idea} and develop a comprehensive database structure that supports the application's data requirements, based on: {details}", agent=agent)
-    ### For the Developer   
-    def create_Developer_implementation_plan(self, agent, idea, details):
-        return Task(description=f"""Implement the technical framework and features based on the detailed requirements and architecture provided for {idea}, focusing on the following aspects: {details}. 
-        Use coding best practices and relevant technologies. You would need to provide for project backend and front end each file, you can provide it like: 
-        API.py
-        
-        from crewai import Crew
-        from devCrewAIAgents import devCrewAIAgents
+    def task_for_conceptualizer(agent, idea):
+        return Task(
+            description=f"Refine and elaborate on this idea to create a clear, innovative software solution concept: {idea}",
+            agent=agent
+        )
 
-        class devCrewRun:
-            def __init__(self, var1, var2):
-                self.var1 = var1
-                self.var2 = var2
-         """, agent=agent)
+    def task_for_analyst(agent, concept_document):
+        return Task(
+            description=f"Based on the conceptualized solution, create detailed technical specifications and user stories: {concept_document}",
+            agent=agent
+        )
+
+    def task_for_architect(agent, requirements_document):
+        return Task(
+            description=f"Design the high-level architecture and select the technology stack based on these requirements: {requirements_document}",
+            agent=agent
+        )
+
+    def task_for_planner(agent, technical_specifications, architectural_design):
+        return Task(
+            description=f"Create a comprehensive project plan, including development roadmap, sprints, and tasks based on: Technical specifications - {technical_specifications}, Architectural design - {architectural_design}",
+            agent=agent
+        )
+
+    def task_for_builder(agent, project_plan, role_specific_details):
+        return Task(
+            description=f"Implement the component of the application as outlined in the project plan. Focus on {role_specific_details}",
+            agent=agent
+        )
+
+    def task_for_tester(agent, application_code):
+        return Task(
+            description="Conduct comprehensive tests on this codebase, identifying any bugs or performance issues",
+            agent=agent
+        )
+
+    def task_for_reviewer(agent, application_code):
+        return Task(
+            description="Review the codebase for optimization opportunities and coding standard adherence",
+            agent=agent
+        )
