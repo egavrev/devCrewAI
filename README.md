@@ -1,7 +1,7 @@
 # Dev_CREWAI 
 
 🤖 UI and framework around Cutting-edge framework for orchestrating role-playing, autonomous AI agents provided by CrewAI.\ 
-
+on hold as this tasks is much more complex and current LLMs are not at the level of generalization which is necessary. 
 Planning of project : 
 
 ## v.0.1
